@@ -13,4 +13,8 @@ public interface TaskRepository {
     void delete(Task task);
 
     Task findByTitleAndDescription(String title, String description);
+
+    void markAsDone(Task task);
+
+    void markAsUndone(Task task);
 }

@@ -42,4 +42,23 @@ class TaskRepositoryImplTest {
         taskRepository.delete(actualTask);
         Assertions.assertThat(actual).hasSize(0);
     }
+
+    @Test
+    void markAsDone() {
+        Task testTask = TaskTestBuilder.createTask().build();
+
+        taskRepository.save(testTask);
+        List<Task> allTasks = taskRepository.getAllTasks();
+        taskRepository.markAsDone(allTasks.get(0));
+
+        List<Task> actual = taskRepository.getAllTasks();
+
+        Assertions.assertThat(actual).hasSize(1);
+        Task doneTask = actual.get(0);
+        Assertions.assertThat(doneTask.isDone()).isTrue();
+
+        taskRepository.markAsUndone(doneTask);
+        Task undoneTask = taskRepository.getAllTasks().get(0);
+        Assertions.assertThat(undoneTask.isDone()).isFalse();
+    }
 }

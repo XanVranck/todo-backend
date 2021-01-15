@@ -33,4 +33,16 @@ public class TaskController {
     public void deleteTask(@RequestBody TaskDTO taskDTO) {
         taskService.deleteTask(taskDTO);
     }
+
+    @PostMapping(path = "/done")
+    @ResponseStatus(HttpStatus.OK)
+    public void markAsDone(@RequestBody TaskDTO taskDTO) {
+        taskService.markAsDone(taskDTO);
+    }
+
+    @PostMapping(path = "/undo")
+    @ResponseStatus(HttpStatus.OK)
+    public void markAsUndone(@RequestBody TaskDTO taskDTO) {
+        taskService.markAsUndone(taskDTO);
+    }
 }

@@ -39,4 +39,22 @@ public class TaskRepositoryImpl implements TaskRepository {
                 .setParameter("description", description)
                 .getSingleResult();
     }
+
+    @Override
+    public void markAsDone(Task task) {
+        entityManager.createQuery("update be.xanv.todo.domain.Task t " +
+                "set t.done = 1 " +
+                "where t.id = :id")
+                .setParameter("id", task.getId())
+                .executeUpdate();
+    }
+
+    @Override
+    public void markAsUndone(Task task) {
+        entityManager.createQuery("update be.xanv.todo.domain.Task t " +
+                "set t.done = 0 " +
+                "where t.id = :id")
+                .setParameter("id", task.getId())
+                .executeUpdate();
+    }
 }

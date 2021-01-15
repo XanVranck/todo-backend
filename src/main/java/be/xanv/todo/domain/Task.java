@@ -17,11 +17,19 @@ public class Task {
     @Column(name = "DESCRIPTION")
     private String description;
 
+    @Column(name = "DONE")
+    private boolean done;
+
     private Task(){}
 
     private Task(String title, String description) {
         this.title = title;
         this.description = description;
+        done = false;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -30,6 +38,10 @@ public class Task {
 
     public String getDescription() {
         return description;
+    }
+
+    public boolean isDone() {
+        return done;
     }
 
     @Override

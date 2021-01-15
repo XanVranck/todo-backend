@@ -11,4 +11,8 @@ public interface TaskService {
     List<TaskDTO> getAllTasks();
 
     void deleteTask(TaskDTO taskDTO);
+
+    void markAsDone(TaskDTO taskDTO);
+
+    void markAsUndone(TaskDTO taskDTO);
 }

@@ -99,4 +99,28 @@ class TaskServiceImplTest {
         verify(taskRepository).delete(task);
         verify(taskRepository).findByTitleAndDescription("title", "description");
     }
+
+    @Test
+    void markAsDone_happyPath() {
+        TaskDTO taskDTO = TaskDTO.createTaskDTO("title", "description");
+        Task task = TaskTestBuilder.createTask().build();
+        when(taskRepository.findByTitleAndDescription(taskDTO.getTitle(), taskDTO.getDescription())).thenReturn(task);
+
+        taskService.markAsDone(taskDTO);
+
+        verify(taskRepository).markAsDone(task);
+        verify(taskRepository).findByTitleAndDescription("title", "description");
+    }
+
+    @Test
+    void markAsUndone_happyPath() {
+        TaskDTO taskDTO = TaskDTO.createTaskDTO("title", "description");
+        Task task = TaskTestBuilder.createTask().build();
+        when(taskRepository.findByTitleAndDescription(taskDTO.getTitle(), taskDTO.getDescription())).thenReturn(task);
+
+        taskService.markAsUndone(taskDTO);
+
+        verify(taskRepository).markAsUndone(task);
+        verify(taskRepository).findByTitleAndDescription("title", "description");
+    }
 }

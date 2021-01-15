@@ -41,4 +41,14 @@ public class TaskServiceImpl implements TaskService {
     public void deleteTask(TaskDTO taskDTO) {
         taskRepository.delete(taskRepository.findByTitleAndDescription(taskDTO.getTitle(), taskDTO.getDescription()));
     }
+
+    @Override
+    public void markAsDone(TaskDTO taskDTO) {
+        taskRepository.markAsDone(taskRepository.findByTitleAndDescription(taskDTO.getTitle(), taskDTO.getDescription()));
+    }
+
+    @Override
+    public void markAsUndone(TaskDTO taskDTO) {
+        taskRepository.markAsUndone(taskRepository.findByTitleAndDescription(taskDTO.getTitle(), taskDTO.getDescription()));
+    }
 }
