@@ -5,5 +5,4 @@ import be.xanv.todo.domain.Task;
 public interface TaskRepository {
 
     void save(Task task);
-
 }
