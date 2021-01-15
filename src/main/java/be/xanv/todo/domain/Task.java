@@ -1,6 +1,7 @@
 package be.xanv.todo.domain;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity(name = "TASK")
 public class Task {
@@ -29,6 +30,28 @@ public class Task {
         return description;
     }
 
+    @Override
+    public String toString() {
+        return "Task{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return Objects.equals(title, task.title) &&
+                Objects.equals(description, task.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, description);
+    }
+
     public static class TaskBuilder {
         private String title;
         private String description;
@@ -46,7 +69,7 @@ public class Task {
             return this;
         }
 
-        public TaskBuilder getDescription(String description) {
+        public TaskBuilder withDescription(String description) {
             this.description = description;
             return this;
         }
