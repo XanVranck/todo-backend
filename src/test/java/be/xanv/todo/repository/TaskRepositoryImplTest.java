@@ -16,16 +16,13 @@ class TaskRepositoryImplTest {
     private TaskRepository taskRepository = new TaskRepositoryImpl();
 
     @Test
-    void save() {
+    void saveAndGetAllTasks() {
         Task testTask = TaskTestBuilder.createTask().build();
 
         taskRepository.save(testTask);
-    }
-
-    @Test
-    void getAllTasks() {
         List<Task> actual = taskRepository.getAllTasks();
 
-        Assertions.assertThat(actual).isNotEmpty();
+        Assertions.assertThat(actual).hasSize(1);
+        Assertions.assertThat(actual.get(0)).isEqualTo(testTask);
     }
 }
