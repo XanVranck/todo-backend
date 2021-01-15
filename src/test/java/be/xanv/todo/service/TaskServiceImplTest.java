@@ -7,13 +7,13 @@ import be.xanv.todo.repository.TaskRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.Mockito.*;
 
 @SpringBootTest
 class TaskServiceImplTest {
@@ -36,7 +36,7 @@ class TaskServiceImplTest {
 
         taskService.createTask(taskDTO);
 
-        Mockito.verify(taskRepository).save(task);
+        verify(taskRepository).save(task);
     }
 
     @Test
@@ -47,12 +47,12 @@ class TaskServiceImplTest {
         Task task = Task.TaskBuilder.createTask().withTitle(title).withDescription(description).build();
         List<Task> tasks = singletonList(task);
         List<TaskDTO> taskDTOS = singletonList(TaskDTO.createTaskDTO(title, description));
-        Mockito.when(taskRepository.getAllTasks()).thenReturn(tasks);
-        Mockito.when(taskMapper.map(tasks)).thenReturn(taskDTOS);
+        when(taskRepository.getAllTasks()).thenReturn(tasks);
+        when(taskMapper.map(tasks)).thenReturn(taskDTOS);
 
         taskService.createTask(taskDTO);
 
-        Mockito.verify(taskRepository, Mockito.never()).save(task);
+        verify(taskRepository, never()).save(task);
     }
 
     @Test
@@ -63,7 +63,7 @@ class TaskServiceImplTest {
 
         taskService.createTask(taskDTO);
 
-        Mockito.verify(taskRepository).save(task);
+        verify(taskRepository).save(task);
     }
 
     @Test
@@ -80,11 +80,23 @@ class TaskServiceImplTest {
     void getAllTasks_happyPath() {
         Task task = TaskTestBuilder.createTask().build();
         List<Task> tasks = singletonList(task);
-        Mockito.when(taskRepository.getAllTasks()).thenReturn(tasks);
+        when(taskRepository.getAllTasks()).thenReturn(tasks);
 
         taskService.getAllTasks();
 
-        Mockito.verify(taskRepository).getAllTasks();
-        Mockito.verify(taskMapper).map(tasks);
+        verify(taskRepository).getAllTasks();
+        verify(taskMapper).map(tasks);
+    }
+
+    @Test
+    void deleteTask_happyPath() {
+        TaskDTO taskDTO = TaskDTO.createTaskDTO("title", "description");
+        Task task = TaskTestBuilder.createTask().build();
+        when(taskRepository.findByTitleAndDescription(taskDTO.getTitle(), taskDTO.getDescription())).thenReturn(task);
+
+        taskService.deleteTask(taskDTO);
+
+        verify(taskRepository).delete(task);
+        verify(taskRepository).findByTitleAndDescription("title", "description");
     }
 }

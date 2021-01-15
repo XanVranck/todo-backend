@@ -15,7 +15,7 @@ class TaskMapperTest {
     private TaskMapper mapper = new TaskMapper();
 
     @Test
-    void map() {
+    void mapTasksToTaskDTOs() {
         List<Task> tasks = new ArrayList<>();
         tasks.add(createTask().build());
         tasks.add(createTask().withTitle("dishes").withDescription("No wait, i have a dishwasher").build());
@@ -27,5 +27,13 @@ class TaskMapperTest {
         assertThat(actual.get(0).getDescription()).isEqualTo("Description");
         assertThat(actual.get(1).getTitle()).isEqualTo("dishes");
         assertThat(actual.get(1).getDescription()).isEqualTo("No wait, i have a dishwasher");
+    }
+
+    @Test
+    void mapTaskDTOToTask() {
+        Task actual = mapper.map(TaskDTO.createTaskDTO("clean", "clean the house"));
+
+        assertThat(actual.getTitle()).isEqualTo("clean");
+        assertThat(actual.getDescription()).isEqualTo("clean the house");
     }
 }

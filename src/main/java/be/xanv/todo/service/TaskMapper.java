@@ -15,4 +15,11 @@ public class TaskMapper {
                 .map(task -> TaskDTO.createTaskDTO(task.getTitle(), task.getDescription()))
                 .collect(Collectors.toList());
     }
+
+    Task map(TaskDTO taskDTO) {
+        return Task.TaskBuilder.createTask()
+                .withTitle(taskDTO.getTitle())
+                .withDescription(taskDTO.getDescription())
+                .build();
+    }
 }

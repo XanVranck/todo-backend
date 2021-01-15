@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.OK;
-
 @Controller
 @Transactional
 @RequestMapping(path = "/task")
@@ -25,8 +23,14 @@ public class TaskController {
         taskService.createTask(taskDTO);
     }
 
-    @GetMapping
+    @GetMapping(path = "/tasks")
     public @ResponseBody List<TaskDTO> getAllTasks(){
         return taskService.getAllTasks();
+    }
+
+    @DeleteMapping(path = "/delete")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteTask(@RequestBody TaskDTO taskDTO) {
+        taskService.deleteTask(taskDTO);
     }
 }

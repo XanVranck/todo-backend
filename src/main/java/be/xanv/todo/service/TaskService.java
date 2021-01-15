@@ -9,4 +9,6 @@ public interface TaskService {
     void createTask(TaskDTO taskDTO);
 
     List<TaskDTO> getAllTasks();
+
+    void deleteTask(TaskDTO taskDTO);
 }

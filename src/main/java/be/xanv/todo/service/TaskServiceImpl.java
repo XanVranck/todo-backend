@@ -23,10 +23,7 @@ public class TaskServiceImpl implements TaskService {
             throw new IllegalStateException("Title can not be empty.");
         }
         if (!isADuplicate(taskDTO)) {
-            taskRepository.save(Task.TaskBuilder.createTask()
-                    .withTitle(taskDTO.getTitle())
-                    .withDescription(taskDTO.getDescription())
-                    .build());
+            taskRepository.save(taskMapper.map(taskDTO));
         }
     }
 
@@ -38,5 +35,10 @@ public class TaskServiceImpl implements TaskService {
     public List<TaskDTO> getAllTasks() {
         List<Task> allTasks = taskRepository.getAllTasks();
         return taskMapper.map(allTasks);
+    }
+
+    @Override
+    public void deleteTask(TaskDTO taskDTO) {
+        taskRepository.delete(taskRepository.findByTitleAndDescription(taskDTO.getTitle(), taskDTO.getDescription()));
     }
 }

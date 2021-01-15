@@ -9,4 +9,8 @@ public interface TaskRepository {
     void save(Task task);
 
     List<Task> getAllTasks();
+
+    void delete(Task task);
+
+    Task findByTitleAndDescription(String title, String description);
 }
