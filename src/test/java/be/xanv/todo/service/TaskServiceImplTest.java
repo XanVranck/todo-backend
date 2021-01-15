@@ -12,13 +12,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
-class TaskServiceTest {
+class TaskServiceImplTest {
 
     @Mock
     private TaskRepository taskRepository;
 
     @InjectMocks
-    private TaskService taskService = new TaskService();
+    private TaskService taskService = new TaskServiceImpl();
 
     @Test
     void createTask_happyPath() {
