@@ -14,6 +14,9 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private TaskRepository taskRepository;
 
+    @Autowired
+    private TaskMapper taskMapper;
+
     @Override
     public void createTask(TaskDTO taskDTO) {
         if (taskDTO.getTitle() == null || taskDTO.getTitle().isEmpty()) {
@@ -27,6 +30,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<TaskDTO> getAllTasks() {
-        return null;
+        List<Task> allTasks = taskRepository.getAllTasks();
+        return taskMapper.map(allTasks);
     }
 }

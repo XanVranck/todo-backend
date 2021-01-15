@@ -17,6 +17,8 @@ public class Task {
     @Column(name = "DESCRIPTION")
     private String description;
 
+    private Task(){}
+
     private Task(String title, String description) {
         this.title = title;
         this.description = description;

@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 @Repository
 public class TaskRepositoryImpl implements TaskRepository {
@@ -17,5 +18,10 @@ public class TaskRepositoryImpl implements TaskRepository {
     @Transactional
     public void save(Task task) {
         entityManager.persist(task);
+    }
+
+    @Override
+    public List<Task> getAllTasks() {
+        return entityManager.createQuery("select t from be.xanv.todo.domain.Task t", Task.class).getResultList();
     }
 }
