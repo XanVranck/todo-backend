@@ -4,6 +4,8 @@ public class TaskDTO {
     private String title;
     private String description;
 
+    private TaskDTO(){}
+
     private TaskDTO(String title, String description) {
         this.title = title;
         this.description = description;
