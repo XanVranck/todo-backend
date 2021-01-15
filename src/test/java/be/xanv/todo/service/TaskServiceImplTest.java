@@ -40,6 +40,22 @@ class TaskServiceImplTest {
     }
 
     @Test
+    void createTask_duplicate_notCreated() {
+        String title = "title";
+        String description = "description";
+        TaskDTO taskDTO = TaskDTO.createTaskDTO(title, description);
+        Task task = Task.TaskBuilder.createTask().withTitle(title).withDescription(description).build();
+        List<Task> tasks = singletonList(task);
+        List<TaskDTO> taskDTOS = singletonList(TaskDTO.createTaskDTO(title, description));
+        Mockito.when(taskRepository.getAllTasks()).thenReturn(tasks);
+        Mockito.when(taskMapper.map(tasks)).thenReturn(taskDTOS);
+
+        taskService.createTask(taskDTO);
+
+        Mockito.verify(taskRepository, Mockito.never()).save(task);
+    }
+
+    @Test
     void createTask_noDescription_happyPath() {
         String title = "title";
         TaskDTO taskDTO = TaskDTO.createTaskDTO(title, null);

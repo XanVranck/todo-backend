@@ -22,10 +22,16 @@ public class TaskServiceImpl implements TaskService {
         if (taskDTO.getTitle() == null || taskDTO.getTitle().isEmpty()) {
             throw new IllegalStateException("Title can not be empty.");
         }
-        taskRepository.save(Task.TaskBuilder.createTask()
-                .withTitle(taskDTO.getTitle())
-                .withDescription(taskDTO.getDescription())
-                .build());
+        if (!isADuplicate(taskDTO)) {
+            taskRepository.save(Task.TaskBuilder.createTask()
+                    .withTitle(taskDTO.getTitle())
+                    .withDescription(taskDTO.getDescription())
+                    .build());
+        }
+    }
+
+    private boolean isADuplicate(TaskDTO taskDTO) {
+        return getAllTasks().stream().anyMatch(t -> t.equals(taskDTO));
     }
 
     @Override
