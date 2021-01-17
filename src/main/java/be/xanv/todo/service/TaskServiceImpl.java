@@ -32,17 +32,17 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void deleteTask(TaskDTO taskDTO) {
-        taskRepository.delete(taskDTO.getUuid());
+    public void deleteTask(String uuid) {
+        taskRepository.delete(uuid);
     }
 
     @Override
-    public void markAsDone(TaskDTO taskDTO) {
-        taskRepository.markAsDone(taskDTO.getUuid());
+    public void markAsDone(String uuid) {
+        taskRepository.markAsDone(uuid);
     }
 
     @Override
-    public void markAsUndone(TaskDTO taskDTO) {
-        taskRepository.markAsUndone(taskDTO.getUuid());
+    public void markAsUndone(String uuid) {
+        taskRepository.markAsUndone(uuid);
     }
 }

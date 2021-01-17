@@ -26,11 +26,11 @@ public class Task {
 
     private Task(){}
 
-    private Task(String title, String description) {
+    private Task(String title, String description, boolean done) {
         this.uuid = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
-        done = false;
+        this.done = done;
     }
 
     public Long getId() {
@@ -81,13 +81,14 @@ public class Task {
     public static class TaskBuilder {
         private String title;
         private String description;
+        private boolean done;
 
         public static TaskBuilder createTask() {
             return new TaskBuilder();
         }
 
         public Task build(){
-            return new Task(title, description);
+            return new Task(title, description, done);
         }
 
         public TaskBuilder withTitle(String title) {
@@ -97,6 +98,11 @@ public class Task {
 
         public TaskBuilder withDescription(String description) {
             this.description = description;
+            return this;
+        }
+
+        public TaskBuilder withDone(boolean done) {
+            this.done = done;
             return this;
         }
     }

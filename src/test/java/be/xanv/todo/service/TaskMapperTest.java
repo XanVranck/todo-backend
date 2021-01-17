@@ -31,7 +31,7 @@ class TaskMapperTest {
 
     @Test
     void mapTaskDTOToTask() {
-        Task actual = mapper.map(TaskDTO.createTaskDTO("clean", "clean the house"));
+        Task actual = mapper.map(TaskDTO.createTaskDTO("clean", "clean the house", false));
 
         assertThat(actual.getTitle()).isEqualTo("clean");
         assertThat(actual.getDescription()).isEqualTo("clean the house");

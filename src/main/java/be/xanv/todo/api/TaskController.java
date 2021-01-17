@@ -28,21 +28,21 @@ public class TaskController {
         return taskService.getAllTasks();
     }
 
-    @DeleteMapping(path = "/delete")
+    @DeleteMapping(path = "/delete/{uuid}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteTask(@RequestBody TaskDTO taskDTO) {
-        taskService.deleteTask(taskDTO);
+    public void deleteTask(@PathVariable String uuid) {
+        taskService.deleteTask(uuid);
     }
 
-    @PostMapping(path = "/mark-as-done")
+    @PostMapping(path = "/mark-as-done/{uuid}")
     @ResponseStatus(HttpStatus.OK)
-    public void markAsDone(@RequestBody TaskDTO taskDTO) {
-        taskService.markAsDone(taskDTO);
+    public void markAsDone(@PathVariable String uuid) {
+        taskService.markAsDone(uuid);
     }
 
-    @PostMapping(path = "/mark-as-undone")
+    @PostMapping(path = "/mark-as-undone/{uuid}")
     @ResponseStatus(HttpStatus.OK)
-    public void markAsUndone(@RequestBody TaskDTO taskDTO) {
-        taskService.markAsUndone(taskDTO);
+    public void markAsUndone(@PathVariable String uuid) {
+        taskService.markAsUndone(uuid);
     }
 }

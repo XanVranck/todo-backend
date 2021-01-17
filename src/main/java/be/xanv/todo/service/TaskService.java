@@ -10,9 +10,9 @@ public interface TaskService {
 
     List<TaskDTO> getAllTasks();
 
-    void deleteTask(TaskDTO taskDTO);
+    void deleteTask(String uuid);
 
-    void markAsDone(TaskDTO taskDTO);
+    void markAsDone(String uuid);
 
-    void markAsUndone(TaskDTO taskDTO);
+    void markAsUndone(String uuid);
 }

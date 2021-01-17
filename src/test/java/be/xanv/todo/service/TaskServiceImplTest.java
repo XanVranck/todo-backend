@@ -32,7 +32,7 @@ class TaskServiceImplTest {
         String title = "title";
         String description = "description";
         Task task = Task.TaskBuilder.createTask().withTitle(title).withDescription(description).build();
-        TaskDTO taskDTO = TaskDTO.createTaskDTO(title, description);
+        TaskDTO taskDTO = TaskDTO.createTaskDTO(title, description, false);
         when(taskMapper.map(taskDTO)).thenReturn(task);
 
         taskService.createTask(taskDTO);
@@ -44,10 +44,10 @@ class TaskServiceImplTest {
     void createTask_duplicate_notCreated() {
         String title = "title";
         String description = "description";
-        TaskDTO taskDTO = TaskDTO.createTaskDTO(title, description);
+        TaskDTO taskDTO = TaskDTO.createTaskDTO(title, description, false);
         Task task = Task.TaskBuilder.createTask().withTitle(title).withDescription(description).build();
         List<Task> tasks = singletonList(task);
-        List<TaskDTO> taskDTOS = singletonList(TaskDTO.createTaskDTO(title, description));
+        List<TaskDTO> taskDTOS = singletonList(TaskDTO.createTaskDTO(title, description, false));
         when(taskRepository.getAllTasks()).thenReturn(tasks);
         when(taskMapper.map(tasks)).thenReturn(taskDTOS);
 
@@ -59,7 +59,7 @@ class TaskServiceImplTest {
     @Test
     void createTask_noDescription_happyPath() {
         String title = "title";
-        TaskDTO taskDTO = TaskDTO.createTaskDTO(title, null);
+        TaskDTO taskDTO = TaskDTO.createTaskDTO(title, null, false);
         Task task = Task.TaskBuilder.createTask().withTitle(title).withDescription(null).build();
         when(taskMapper.map(taskDTO)).thenReturn(task);
 
@@ -71,7 +71,7 @@ class TaskServiceImplTest {
     @Test
     void createTask_noTitle_illegalStateException() {
         String description = "description";
-        TaskDTO taskDTO = TaskDTO.createTaskDTO(null, description);
+        TaskDTO taskDTO = TaskDTO.createTaskDTO(null, description, false);
 
         assertThatThrownBy(() -> taskService.createTask(taskDTO))
                 .isInstanceOf(IllegalStateException.class)
@@ -93,9 +93,8 @@ class TaskServiceImplTest {
     @Test
     void deleteTask_happyPath() {
         Task task = TaskTestBuilder.createTask().build();
-        TaskDTO taskDTO = TaskDTO.createTaskDTO(task.getUuid(), "title", "description");
 
-        taskService.deleteTask(taskDTO);
+        taskService.deleteTask(task.getUuid());
 
         verify(taskRepository).delete(task.getUuid());
     }
@@ -103,9 +102,8 @@ class TaskServiceImplTest {
     @Test
     void markAsDone_happyPath() {
         Task task = TaskTestBuilder.createTask().build();
-        TaskDTO taskDTO = TaskDTO.createTaskDTO(task.getUuid(), "title", "description");
 
-        taskService.markAsDone(taskDTO);
+        taskService.markAsDone(task.getUuid());
 
         verify(taskRepository).markAsDone(task.getUuid());
     }
@@ -113,9 +111,8 @@ class TaskServiceImplTest {
     @Test
     void markAsUndone_happyPath() {
         Task task = TaskTestBuilder.createTask().build();
-        TaskDTO taskDTO = TaskDTO.createTaskDTO(task.getUuid(),"title", "description");
 
-        taskService.markAsUndone(taskDTO);
+        taskService.markAsUndone(task.getUuid());
 
         verify(taskRepository).markAsUndone(task.getUuid());
     }

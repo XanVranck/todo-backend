@@ -46,7 +46,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     public void markAsUndone(String uuid) {
         entityManager.createQuery("update be.xanv.todo.domain.Task t " +
                 "set t.done = 0 " +
-                "where t.id = :id")
+                "where t.uuid = :id")
                 .setParameter("id", uuid)
                 .executeUpdate();
     }
