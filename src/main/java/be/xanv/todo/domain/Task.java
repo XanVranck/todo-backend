@@ -12,7 +12,7 @@ public class Task {
     @Column(name = "ID", updatable = false, nullable = false)
     private Long id;
 
-    @Column(name = "UUID")
+    @Column(name = "UUID", updatable = false, nullable = false)
     private String uuid;
 
     @Column(name = "TITLE", nullable = false)
@@ -31,10 +31,6 @@ public class Task {
         this.title = title;
         this.description = description;
         this.done = done;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getUuid() {
