@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static be.xanv.todo.api.TaskDTO.TaskDTOBuilder.createTaskDTO;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
@@ -33,7 +34,7 @@ class TaskServiceImplTest {
         String title = "title";
         String description = "description";
         Task task = Task.TaskBuilder.createTask().withTitle(title).withDescription(description).build();
-        TaskDTO taskDTO = TaskDTO.createTaskDTO(title, description, false);
+        TaskDTO taskDTO = createTaskDTO().withTitle("title").withDescription("description").build();
         when(taskMapper.map(taskDTO)).thenReturn(task);
 
         taskService.createTask(taskDTO);
@@ -45,10 +46,10 @@ class TaskServiceImplTest {
     void createTask_duplicate_notCreated() {
         String title = "title";
         String description = "description";
-        TaskDTO taskDTO = TaskDTO.createTaskDTO(title, description, false);
+        TaskDTO taskDTO = createTaskDTO().withTitle("title").withDescription("description").build();
         Task task = Task.TaskBuilder.createTask().withTitle(title).withDescription(description).build();
         List<Task> tasks = singletonList(task);
-        List<TaskDTO> taskDTOS = singletonList(TaskDTO.createTaskDTO(title, description, false));
+        List<TaskDTO> taskDTOS = singletonList(createTaskDTO().withTitle("title").withDescription("description").build());
         when(taskRepository.getAllTasks()).thenReturn(tasks);
         when(taskMapper.map(tasks)).thenReturn(taskDTOS);
 
@@ -60,7 +61,7 @@ class TaskServiceImplTest {
     @Test
     void createTask_noDescription_happyPath() {
         String title = "title";
-        TaskDTO taskDTO = TaskDTO.createTaskDTO(title, null, false);
+        TaskDTO taskDTO = createTaskDTO().withTitle("title").withDescription(null).build();
         Task task = Task.TaskBuilder.createTask().withTitle(title).withDescription(null).build();
         when(taskMapper.map(taskDTO)).thenReturn(task);
 
@@ -71,8 +72,7 @@ class TaskServiceImplTest {
 
     @Test
     void createTask_noTitle_illegalStateException() {
-        String description = "description";
-        TaskDTO taskDTO = TaskDTO.createTaskDTO(null, description, false);
+        TaskDTO taskDTO = createTaskDTO().withTitle(null).withDescription("description").build();
 
         assertThatThrownBy(() -> taskService.createTask(taskDTO))
                 .isInstanceOf(IllegalStateException.class)

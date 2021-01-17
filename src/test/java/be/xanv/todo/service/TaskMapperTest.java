@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static be.xanv.todo.api.TaskDTO.TaskDTOBuilder.createTaskDTO;
 import static be.xanv.todo.domain.TaskTestBuilder.createTask;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,7 +32,7 @@ class TaskMapperTest {
 
     @Test
     void mapTaskDTOToTask() {
-        Task actual = mapper.map(TaskDTO.createTaskDTO("clean", "clean the house", false));
+        Task actual = mapper.map(createTaskDTO().withTitle("clean").withDescription("clean the house").build());
 
         assertThat(actual.getTitle()).isEqualTo("clean");
         assertThat(actual.getDescription()).isEqualTo("clean the house");

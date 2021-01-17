@@ -1,6 +1,7 @@
 package be.xanv.todo.domain;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -24,13 +25,17 @@ public class Task {
     @Column(name = "DONE")
     private boolean done;
 
+    @Column(name = "EXECUTION_DATE")
+    private LocalDate executionDate;
+
     private Task(){}
 
-    private Task(String title, String description, boolean done) {
+    private Task(String title, String description, boolean done, LocalDate executionDate) {
         this.uuid = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
         this.done = done;
+        this.executionDate = executionDate;
     }
 
     public String getUuid() {
@@ -49,6 +54,10 @@ public class Task {
         return done;
     }
 
+    public LocalDate getExecutionDate() {
+        return executionDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,21 +65,23 @@ public class Task {
         Task task = (Task) o;
         return done == task.done &&
                 Objects.equals(title, task.title) &&
-                Objects.equals(description, task.description);
+                Objects.equals(description, task.description) &&
+                Objects.equals(executionDate, task.executionDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, description, done);
+        return Objects.hash(title, description, done, executionDate);
     }
 
     @Override
     public String toString() {
         return "Task{" +
-                "uuid='" + uuid + '\'' +
+                ", uuid='" + uuid + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", done=" + done +
+                ", executionDate=" + executionDate +
                 '}';
     }
 
@@ -78,13 +89,14 @@ public class Task {
         private String title;
         private String description;
         private boolean done;
+        private LocalDate executionDate;
 
         public static TaskBuilder createTask() {
             return new TaskBuilder();
         }
 
         public Task build(){
-            return new Task(title, description, done);
+            return new Task(title, description, done, executionDate);
         }
 
         public TaskBuilder withTitle(String title) {
@@ -99,6 +111,11 @@ public class Task {
 
         public TaskBuilder withDone(boolean done) {
             this.done = done;
+            return this;
+        }
+
+        public TaskBuilder withExecutionDate(LocalDate executionDate) {
+            this.executionDate = executionDate;
             return this;
         }
     }
