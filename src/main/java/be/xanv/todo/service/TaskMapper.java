@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class TaskMapper {
+class TaskMapper {
 
     List<TaskDTO> map(List<Task> tasks) {
         return tasks.stream()
