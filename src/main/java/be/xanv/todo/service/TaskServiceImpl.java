@@ -45,4 +45,9 @@ public class TaskServiceImpl implements TaskService {
     public void markAsUndone(String uuid) {
         taskRepository.markAsUndone(uuid);
     }
+
+    @Override
+    public void editTask(TaskDTO taskDTO) {
+        taskRepository.edit(taskDTO);
+    }
 }

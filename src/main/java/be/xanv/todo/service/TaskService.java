@@ -15,4 +15,6 @@ public interface TaskService {
     void markAsDone(String uuid);
 
     void markAsUndone(String uuid);
+
+    void editTask(TaskDTO taskDTO);
 }

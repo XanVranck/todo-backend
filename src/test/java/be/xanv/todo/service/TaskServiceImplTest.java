@@ -116,4 +116,13 @@ class TaskServiceImplTest {
 
         verify(taskRepository).markAsUndone(task.getUuid());
     }
+
+    @Test
+    void edit_happyPath() {
+        TaskDTO taskDTO = TaskDTO.createTaskDTO("uuid", "title", "description", false);
+
+        taskService.editTask(taskDTO);
+
+        verify(taskRepository).edit(taskDTO);
+    }
 }

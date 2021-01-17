@@ -23,6 +23,12 @@ public class TaskController {
         taskService.createTask(taskDTO);
     }
 
+    @PostMapping(path = "/edit")
+    @ResponseStatus(HttpStatus.OK)
+    public void editTask(@RequestBody TaskDTO taskDTO) {
+        taskService.editTask(taskDTO);
+    }
+
     @GetMapping(path = "/tasks")
     public @ResponseBody List<TaskDTO> getAllTasks(){
         return taskService.getAllTasks();

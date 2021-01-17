@@ -34,8 +34,20 @@ class TaskControllerTest {
 
     @Test
     void createTask() {
-        ResponseEntity<HttpStatus> httpStatusResponseEntity = this.restTemplate.postForEntity(BASE_URL + "/create", createTaskDTO("title", "desciption", false), HttpStatus.class);
+        ResponseEntity<HttpStatus> httpStatusResponseEntity = this.restTemplate.postForEntity(BASE_URL + "/create", createTaskDTO("title", "description", false), HttpStatus.class);
         assertThat(httpStatusResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    void editTask() {
+        this.restTemplate.postForEntity(BASE_URL + "/create", createTaskDTO("title", "description", false), HttpStatus.class);
+        ResponseEntity<TaskDTO[]> response = restTemplate.getForEntity(BASE_URL + "/tasks", TaskDTO[].class);
+        this.restTemplate.postForEntity(BASE_URL + "/edit", createTaskDTO(response.getBody()[0].getUuid(), "edited title", "edited description", false), HttpStatus.class);
+        ResponseEntity<TaskDTO[]> actual = restTemplate.getForEntity(BASE_URL + "/tasks", TaskDTO[].class);
+
+        TaskDTO taskDTO = actual.getBody()[0];
+        assertThat(taskDTO.getTitle()).isEqualTo("edited title");
+        assertThat(taskDTO.getDescription()).isEqualTo("edited description");
     }
 
     @Test
