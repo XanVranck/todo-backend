@@ -1,6 +1,7 @@
 package be.xanv.todo.service;
 
 import be.xanv.todo.api.TaskDTO;
+import be.xanv.todo.api.TaskEditDTO;
 import be.xanv.todo.domain.Task;
 import be.xanv.todo.domain.TaskTestBuilder;
 import be.xanv.todo.repository.TaskRepository;
@@ -119,10 +120,10 @@ class TaskServiceImplTest {
 
     @Test
     void edit_happyPath() {
-        TaskDTO taskDTO = TaskDTO.createTaskDTO("uuid", "title", "description", false);
+        TaskEditDTO taskEditDTO = TaskEditDTO.createTaskEditDTO("title", "description");
 
-        taskService.editTask(taskDTO);
+        taskService.editTask("uuid", taskEditDTO);
 
-        verify(taskRepository).edit(taskDTO);
+        verify(taskRepository).edit("uuid", taskEditDTO);
     }
 }

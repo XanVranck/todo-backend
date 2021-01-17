@@ -1,5 +1,6 @@
 package be.xanv.todo.repository;
 
+import be.xanv.todo.api.TaskEditDTO;
 import be.xanv.todo.domain.Task;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +49,18 @@ public class TaskRepositoryImpl implements TaskRepository {
                 "set t.done = 0 " +
                 "where t.uuid = :id")
                 .setParameter("id", uuid)
+                .executeUpdate();
+    }
+
+    @Override
+    public void edit(String uuid, TaskEditDTO taskEditDTO) {
+        entityManager.createQuery("update be.xanv.todo.domain.Task t " +
+                "set t.title = :title, " +
+                "t.description = :description " +
+                "where t.uuid = :uuid")
+                .setParameter("title", taskEditDTO.getTitle())
+                .setParameter("description", taskEditDTO.getDescription())
+                .setParameter("uuid", uuid)
                 .executeUpdate();
     }
 }

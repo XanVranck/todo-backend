@@ -23,10 +23,11 @@ public class TaskController {
         taskService.createTask(taskDTO);
     }
 
-    @PostMapping(path = "/edit")
+    @PostMapping(path = "/edit/{uuid}")
     @ResponseStatus(HttpStatus.OK)
-    public void editTask(@RequestBody TaskDTO taskDTO) {
-        taskService.editTask(taskDTO);
+    public void editTask(@PathVariable String uuid,
+                         @RequestBody TaskEditDTO taskEditDTO) {
+        taskService.editTask(uuid, taskEditDTO);
     }
 
     @GetMapping(path = "/tasks")

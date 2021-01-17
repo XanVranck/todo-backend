@@ -1,6 +1,6 @@
 package be.xanv.todo.repository;
 
-import be.xanv.todo.api.TaskDTO;
+import be.xanv.todo.api.TaskEditDTO;
 import be.xanv.todo.domain.Task;
 import be.xanv.todo.domain.TaskTestBuilder;
 import org.assertj.core.api.Assertions;
@@ -65,7 +65,7 @@ class TaskRepositoryImplTest {
         Assertions.assertThat(tasks).hasSize(1);
         String uuid = tasks.get(0).getUuid();
 
-        taskRepository.edit(TaskDTO.createTaskDTO(uuid, "edited title", "edited description", false));
+        taskRepository.edit(uuid, TaskEditDTO.createTaskEditDTO("edited title", "edited description"));
         List<Task> afterMarkAsDone = taskRepository.getAllTasks();
         Assertions.assertThat(afterMarkAsDone).hasSize(1);
         Assertions.assertThat(afterMarkAsDone.get(0).getTitle()).isEqualTo("edited title");

@@ -1,6 +1,7 @@
 package be.xanv.todo.service;
 
 import be.xanv.todo.api.TaskDTO;
+import be.xanv.todo.api.TaskEditDTO;
 import be.xanv.todo.domain.Task;
 import be.xanv.todo.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void editTask(TaskDTO taskDTO) {
-        taskRepository.edit(taskDTO);
+    public void editTask(String uuid, TaskEditDTO taskEditDTO) {
+        taskRepository.edit(uuid, taskEditDTO);
     }
 }

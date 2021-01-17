@@ -1,6 +1,7 @@
 package be.xanv.todo.service;
 
 import be.xanv.todo.api.TaskDTO;
+import be.xanv.todo.api.TaskEditDTO;
 
 import java.util.List;
 
@@ -16,5 +17,5 @@ public interface TaskService {
 
     void markAsUndone(String uuid);
 
-    void editTask(TaskDTO taskDTO);
+    void editTask(String uuid, TaskEditDTO taskEditDTO);
 }

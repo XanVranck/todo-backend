@@ -1,6 +1,5 @@
 package be.xanv.todo.api;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +41,7 @@ class TaskControllerTest {
     void editTask() {
         this.restTemplate.postForEntity(BASE_URL + "/create", createTaskDTO("title", "description", false), HttpStatus.class);
         ResponseEntity<TaskDTO[]> response = restTemplate.getForEntity(BASE_URL + "/tasks", TaskDTO[].class);
-        this.restTemplate.postForEntity(BASE_URL + "/edit", createTaskDTO(response.getBody()[0].getUuid(), "edited title", "edited description", false), HttpStatus.class);
+        this.restTemplate.postForEntity(BASE_URL + "/edit/" + response.getBody()[0].getUuid(), TaskEditDTO.createTaskEditDTO("edited title", "edited description"), HttpStatus.class);
         ResponseEntity<TaskDTO[]> actual = restTemplate.getForEntity(BASE_URL + "/tasks", TaskDTO[].class);
 
         TaskDTO taskDTO = actual.getBody()[0];
