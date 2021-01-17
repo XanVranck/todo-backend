@@ -31,8 +31,9 @@ class TaskServiceImplTest {
     void createTask_happyPath() {
         String title = "title";
         String description = "description";
-        TaskDTO taskDTO = TaskDTO.createTaskDTO(title, description);
         Task task = Task.TaskBuilder.createTask().withTitle(title).withDescription(description).build();
+        TaskDTO taskDTO = TaskDTO.createTaskDTO(title, description);
+        when(taskMapper.map(taskDTO)).thenReturn(task);
 
         taskService.createTask(taskDTO);
 
@@ -60,6 +61,7 @@ class TaskServiceImplTest {
         String title = "title";
         TaskDTO taskDTO = TaskDTO.createTaskDTO(title, null);
         Task task = Task.TaskBuilder.createTask().withTitle(title).withDescription(null).build();
+        when(taskMapper.map(taskDTO)).thenReturn(task);
 
         taskService.createTask(taskDTO);
 
@@ -90,37 +92,31 @@ class TaskServiceImplTest {
 
     @Test
     void deleteTask_happyPath() {
-        TaskDTO taskDTO = TaskDTO.createTaskDTO("title", "description");
         Task task = TaskTestBuilder.createTask().build();
-        when(taskRepository.findByTitleAndDescription(taskDTO.getTitle(), taskDTO.getDescription())).thenReturn(task);
+        TaskDTO taskDTO = TaskDTO.createTaskDTO(task.getUuid(), "title", "description");
 
         taskService.deleteTask(taskDTO);
 
-        verify(taskRepository).delete(task);
-        verify(taskRepository).findByTitleAndDescription("title", "description");
+        verify(taskRepository).delete(task.getUuid());
     }
 
     @Test
     void markAsDone_happyPath() {
-        TaskDTO taskDTO = TaskDTO.createTaskDTO("title", "description");
         Task task = TaskTestBuilder.createTask().build();
-        when(taskRepository.findByTitleAndDescription(taskDTO.getTitle(), taskDTO.getDescription())).thenReturn(task);
+        TaskDTO taskDTO = TaskDTO.createTaskDTO(task.getUuid(), "title", "description");
 
         taskService.markAsDone(taskDTO);
 
-        verify(taskRepository).markAsDone(task);
-        verify(taskRepository).findByTitleAndDescription("title", "description");
+        verify(taskRepository).markAsDone(task.getUuid());
     }
 
     @Test
     void markAsUndone_happyPath() {
-        TaskDTO taskDTO = TaskDTO.createTaskDTO("title", "description");
         Task task = TaskTestBuilder.createTask().build();
-        when(taskRepository.findByTitleAndDescription(taskDTO.getTitle(), taskDTO.getDescription())).thenReturn(task);
+        TaskDTO taskDTO = TaskDTO.createTaskDTO(task.getUuid(),"title", "description");
 
         taskService.markAsUndone(taskDTO);
 
-        verify(taskRepository).markAsUndone(task);
-        verify(taskRepository).findByTitleAndDescription("title", "description");
+        verify(taskRepository).markAsUndone(task.getUuid());
     }
 }

@@ -22,13 +22,7 @@ public class TaskServiceImpl implements TaskService {
         if (taskDTO.getTitle() == null || taskDTO.getTitle().isEmpty()) {
             throw new IllegalStateException("Title can not be empty.");
         }
-        if (!isADuplicate(taskDTO)) {
-            taskRepository.save(taskMapper.map(taskDTO));
-        }
-    }
-
-    private boolean isADuplicate(TaskDTO taskDTO) {
-        return getAllTasks().stream().anyMatch(t -> t.equals(taskDTO));
+        taskRepository.save(taskMapper.map(taskDTO));
     }
 
     @Override
@@ -39,16 +33,16 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteTask(TaskDTO taskDTO) {
-        taskRepository.delete(taskRepository.findByTitleAndDescription(taskDTO.getTitle(), taskDTO.getDescription()));
+        taskRepository.delete(taskDTO.getUuid());
     }
 
     @Override
     public void markAsDone(TaskDTO taskDTO) {
-        taskRepository.markAsDone(taskRepository.findByTitleAndDescription(taskDTO.getTitle(), taskDTO.getDescription()));
+        taskRepository.markAsDone(taskDTO.getUuid());
     }
 
     @Override
     public void markAsUndone(TaskDTO taskDTO) {
-        taskRepository.markAsUndone(taskRepository.findByTitleAndDescription(taskDTO.getTitle(), taskDTO.getDescription()));
+        taskRepository.markAsUndone(taskDTO.getUuid());
     }
 }

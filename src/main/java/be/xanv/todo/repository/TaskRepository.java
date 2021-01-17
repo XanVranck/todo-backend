@@ -10,11 +10,9 @@ public interface TaskRepository {
 
     List<Task> getAllTasks();
 
-    void delete(Task task);
+    void delete(String uuid);
 
-    Task findByTitleAndDescription(String title, String description);
+    void markAsDone(String uuid);
 
-    void markAsDone(Task task);
-
-    void markAsUndone(Task task);
+    void markAsUndone(String uuid);
 }

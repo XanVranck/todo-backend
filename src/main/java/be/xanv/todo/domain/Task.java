@@ -2,6 +2,7 @@ package be.xanv.todo.domain;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity(name = "TASK")
 public class Task {
@@ -10,6 +11,9 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", updatable = false, nullable = false)
     private Long id;
+
+    @Column(name = "UUID")
+    private String uuid;
 
     @Column(name = "TITLE", nullable = false)
     private String title;
@@ -23,6 +27,7 @@ public class Task {
     private Task(){}
 
     private Task(String title, String description) {
+        this.uuid = UUID.randomUUID().toString();
         this.title = title;
         this.description = description;
         done = false;
@@ -30,6 +35,10 @@ public class Task {
 
     public Long getId() {
         return id;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     public String getTitle() {
@@ -45,25 +54,28 @@ public class Task {
     }
 
     @Override
-    public String toString() {
-        return "Task{" +
-                "title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equals(title, task.title) &&
+        return done == task.done &&
+                Objects.equals(title, task.title) &&
                 Objects.equals(description, task.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, description);
+        return Objects.hash(title, description, done);
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "uuid='" + uuid + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", done=" + done +
+                '}';
     }
 
     public static class TaskBuilder {

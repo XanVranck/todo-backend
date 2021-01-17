@@ -12,7 +12,7 @@ public class TaskMapper {
 
     List<TaskDTO> map(List<Task> tasks) {
         return tasks.stream()
-                .map(task -> TaskDTO.createTaskDTO(task.getTitle(), task.getDescription()))
+                .map(task -> TaskDTO.createTaskDTO(task.getUuid(), task.getTitle(), task.getDescription()))
                 .collect(Collectors.toList());
     }
 
