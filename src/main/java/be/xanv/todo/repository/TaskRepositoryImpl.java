@@ -29,8 +29,8 @@ public class TaskRepositoryImpl implements TaskRepository {
     @Override
     public void delete(String uuid) {
         entityManager.createQuery("delete from be.xanv.todo.domain.Task t " +
-                "where t.uuid = :id")
-                .setParameter("id", uuid)
+                "where t.uuid = :uuid")
+                .setParameter("uuid", uuid)
                 .executeUpdate();
     }
 
@@ -38,8 +38,8 @@ public class TaskRepositoryImpl implements TaskRepository {
     public void markAsDone(String uuid) {
         entityManager.createQuery("update be.xanv.todo.domain.Task t " +
                 "set t.done = 1 " +
-                "where t.uuid = :id")
-                .setParameter("id", uuid)
+                "where t.uuid = :uuid")
+                .setParameter("uuid", uuid)
                 .executeUpdate();
     }
 
@@ -47,8 +47,8 @@ public class TaskRepositoryImpl implements TaskRepository {
     public void markAsUndone(String uuid) {
         entityManager.createQuery("update be.xanv.todo.domain.Task t " +
                 "set t.done = 0 " +
-                "where t.uuid = :id")
-                .setParameter("id", uuid)
+                "where t.uuid = :uuid")
+                .setParameter("uuid", uuid)
                 .executeUpdate();
     }
 
