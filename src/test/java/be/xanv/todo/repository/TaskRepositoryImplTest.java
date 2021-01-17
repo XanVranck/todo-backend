@@ -56,6 +56,7 @@ class TaskRepositoryImplTest {
         Assertions.assertThat(afterMarkAsDone).hasSize(1);
         Assertions.assertThat(afterMarkAsDone.get(0).isDone()).isTrue();
     }
+
     @Test
     void edit() {
         Task testTask = TaskTestBuilder.createTask().build();
@@ -65,7 +66,7 @@ class TaskRepositoryImplTest {
         Assertions.assertThat(tasks).hasSize(1);
         String uuid = tasks.get(0).getUuid();
 
-        taskRepository.edit(uuid, TaskEditDTO.createTaskEditDTO("edited title", "edited description"));
+        taskRepository.edit(uuid, TaskEditDTO.TaskEditDTOBuilder.createTaskEditDTO().withTitle("edited title").withDescription("edited description").build());
         List<Task> afterMarkAsDone = taskRepository.getAllTasks();
         Assertions.assertThat(afterMarkAsDone).hasSize(1);
         Assertions.assertThat(afterMarkAsDone.get(0).getTitle()).isEqualTo("edited title");

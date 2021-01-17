@@ -41,7 +41,7 @@ class TaskControllerTest {
     void editTask() {
         this.restTemplate.postForEntity(BASE_URL + "/create", createTaskDTO().withTitle("title").withDescription("description").build(), HttpStatus.class);
         ResponseEntity<TaskDTO[]> response = restTemplate.getForEntity(BASE_URL + "/tasks", TaskDTO[].class);
-        this.restTemplate.postForEntity(BASE_URL + "/edit/" + response.getBody()[0].getUuid(), TaskEditDTO.createTaskEditDTO("edited title", "edited description"), HttpStatus.class);
+        this.restTemplate.postForEntity(BASE_URL + "/edit/" + response.getBody()[0].getUuid(), "edited description", HttpStatus.class);
         ResponseEntity<TaskDTO[]> actual = restTemplate.getForEntity(BASE_URL + "/tasks", TaskDTO[].class);
 
         TaskDTO taskDTO = actual.getBody()[0];

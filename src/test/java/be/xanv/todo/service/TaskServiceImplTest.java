@@ -120,7 +120,7 @@ class TaskServiceImplTest {
 
     @Test
     void edit_happyPath() {
-        TaskEditDTO taskEditDTO = TaskEditDTO.createTaskEditDTO("title", "description");
+        TaskEditDTO taskEditDTO = TaskEditDTO.TaskEditDTOBuilder.createTaskEditDTO().withTitle("title").withDescription("description").build();
 
         taskService.editTask("uuid", taskEditDTO);
 
